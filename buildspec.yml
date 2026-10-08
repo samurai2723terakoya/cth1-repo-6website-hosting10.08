@@ -15,7 +15,7 @@ phases:
   build:
     commands:
       - docker build -t ${ECR_REPO_NAME}:latest .
-    post_build:
+  post_build:
      commands:
       - docker push ${ECR_IMAGE_URI}
       - printf '[{"name":"code-nginx-contaier-name","imageUri":"%s"}]' ${ECR_IMAGE_URI} > imagedefinitions.json
