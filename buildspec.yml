@@ -15,12 +15,11 @@ phases:
   build:
     commands:
       - docker build -t ${ECR_REPO_NAME}:latest .
-  post_build:
-    commands:
-      - docker tag ${ECR_REPO_NAME}:latest ${ECR_IMAGE_URI}
+    post_build:
+     commands:
       - docker push ${ECR_IMAGE_URI}
+      - printf '[{"name":"code-nginx-contaier-name","imageUri":"%s"}]' ${ECR_IMAGE_URI} > imagedefinitions.json
 
-            - printf '[{"name":"code-nginx-contaier-name","imageUri":"%s"}]' ${ECR_IMAGE_URI} > imagedefinitions.json
         
 artifacts:
   files:
