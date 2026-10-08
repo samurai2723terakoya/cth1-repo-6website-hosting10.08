@@ -16,7 +16,10 @@ phases:
     commands:
       - docker build -t ${ECR_REPO_NAME}:latest .
   post_build:
-     commands:
+    commands:
+      # ★ 1行追加：作ったイメージにECR用のタグ（別名）を紐付けます
+      - docker tag ${ECR_REPO_NAME}:latest ${ECR_IMAGE_URI}
+      
       - docker push ${ECR_IMAGE_URI}
       - printf '[{"name":"code-nginx-contaier-name","imageUri":"%s"}]' ${ECR_IMAGE_URI} > imagedefinitions.json
 
